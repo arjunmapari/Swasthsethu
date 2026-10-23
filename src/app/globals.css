@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --color-paper: #f3ebe2;
+  --color-cream: #faf6f0;
+  --color-ink: #1c2a28;
+  --color-clay: #c45c3e;
+  --color-clay-deep: #a6462c;
+  --color-clay-soft: #e8c4b0;
+  --color-teal: #3d7a73;
+  --color-teal-deep: #2c5c57;
+}
+
+html,
+body {
+  background: #f3ebe2;
+  color: #1c2a28;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: #c45c3e;
+  color: #faf6f0;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}

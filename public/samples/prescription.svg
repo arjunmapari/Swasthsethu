@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="900" viewBox="0 0 640 900">
+  <rect width="640" height="900" fill="#f7f1e8"/>
+  <rect x="36" y="36" width="568" height="828" fill="none" stroke="#1c2a28" stroke-width="3"/>
+  <text x="56" y="90" font-family="Georgia, serif" font-size="28" fill="#c45c3e">Dr. Mehta Clinic</text>
+  <text x="56" y="124" font-family="sans-serif" font-size="14" fill="#3d7a73">Pune · OPD prescription</text>
+  <line x1="56" y1="148" x2="584" y2="148" stroke="#1c2a28" stroke-opacity="0.2"/>
+  <text x="56" y="190" font-family="sans-serif" font-size="16" fill="#1c2a28">Rx</text>
+  <text x="56" y="240" font-family="Georgia, serif" font-size="22" fill="#1c2a28">Amoxicillin 500 mg</text>
+  <text x="56" y="274" font-family="sans-serif" font-size="16" fill="#1c2a28">1 tablet twice daily × 5 days</text>
+  <text x="56" y="330" font-family="Georgia, serif" font-size="22" fill="#1c2a28">Paracetamol 650 mg</text>
+  <text x="56" y="364" font-family="sans-serif" font-size="16" fill="#1c2a28">as needed for fever</text>
+  <text x="56" y="820" font-family="sans-serif" font-size="12" fill="#1c2a28" opacity="0.5">Sample document for Swasthsethu demo</text>
+</svg>

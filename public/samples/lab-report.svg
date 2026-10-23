@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="900" viewBox="0 0 640 900">
+  <rect width="640" height="900" fill="#faf6f0"/>
+  <rect x="0" y="0" width="640" height="88" fill="#3d7a73"/>
+  <text x="40" y="54" font-family="sans-serif" font-size="22" fill="#faf6f0">City Diagnostics · CBC</text>
+  <text x="40" y="140" font-family="sans-serif" font-size="14" fill="#1c2a28" opacity="0.55">Hemogram</text>
+  <rect x="40" y="168" width="560" height="56" fill="#f3ebe2"/>
+  <text x="56" y="202" font-family="sans-serif" font-size="18" fill="#1c2a28">Hemoglobin</text>
+  <text x="420" y="202" font-family="sans-serif" font-size="18" fill="#c45c3e">11.2 g/dL  LOW</text>
+  <rect x="40" y="236" width="560" height="56" fill="#ffffff"/>
+  <text x="56" y="270" font-family="sans-serif" font-size="18" fill="#1c2a28">WBC</text>
+  <text x="420" y="270" font-family="sans-serif" font-size="18" fill="#1c2a28">7.4 ×10³/µL</text>
+  <rect x="40" y="304" width="560" height="56" fill="#f3ebe2"/>
+  <text x="56" y="338" font-family="sans-serif" font-size="18" fill="#1c2a28">Platelets</text>
+  <text x="420" y="338" font-family="sans-serif" font-size="18" fill="#1c2a28">2.1 L/mm³</text>
+  <text x="40" y="820" font-family="sans-serif" font-size="12" fill="#1c2a28" opacity="0.5">Sample document for Swasthsethu demo</text>
+</svg>
