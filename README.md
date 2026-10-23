@@ -1,75 +1,243 @@
-# Swasthsethu
+# Swasthsethu 🏥
 
-A waiting-room kiosk that takes a patient's history in English, Hindi or Marathi and hands the doctor a clean summary. Patients, doctors and admins sign in with email and password, and everything is stored in **Postgres**, so it runs on **Vercel**.
+### Accessible Digital Healthcare & Patient Case Management
 
-The conversation is **scripted** (no live LLM or translation) and document "extraction" is mocked. The question script and all UI copy live in `src/data/`.
+Swasthsethu is a web-based healthcare platform designed to simplify patient registration, health interviews, case management, and coordination between administrators, doctors, and patients.
 
-## How it works
+The platform provides a multilingual patient experience, persistent patient records, and role-based dashboards to support a more accessible and organized healthcare workflow.
 
-- **Patient:** registers once at `/register` (name, email, password) and gets a permanent **patient ID** like `PT-7K4M-9QXD`. Each visit (`/demo`) is saved to their account with a **case ID** like `SS-7K4M-9QXD`. On any later day they just sign in at `/login` and see every earlier visit at `/patient`, including the doctor's status (Waiting, With the doctor, Completed).
-- **Doctor:** signs in at `/login` and lands on `/doctor`: a live queue (urgent first) showing each patient's name and patient ID. They can type a **case ID or a patient ID** to open a case or a patient's whole history, and move a case Waiting, In consultation, Completed.
-- **Admin:** `/admin` creates doctor/admin accounts, disables accounts, resets passwords, and lists every registered patient with their ID.
+**Live Demo:** [https://swasthsethu.vercel.app/](https://swasthsethu.vercel.app/)
 
-Safety rules in the intake (red flags, urgent notice, emergency wording in typed answers, possible-pregnancy rule) are in `src/lib/summary.ts`. **Have a clinician review them before real use.**
+---
 
-## Run it on your computer
+## ✨ Features
 
-You need Node.js 22 or newer and a Postgres database. The easiest is a free hosted one: create a project at neon.tech and copy its connection string. (A local Postgres works too.)
+- **Patient Registration:** Create an account and receive a unique patient ID.
+- **Interactive Health Interview:** Complete a guided health questionnaire and generate a case record.
+- **Patient Dashboard:** Access previously submitted cases and visit information.
+- **Doctor Dashboard:** Review patient cases and search using patient IDs or case IDs.
+- **Admin Dashboard:** Manage doctor accounts and user access.
+- **Multilingual Interface:** Includes English, Hindi, and Marathi interface and questionnaire content.
+- **Persistent Database:** Store user accounts and case records in PostgreSQL using Neon.
+- **Secure Authentication:** Password-based login and session management.
+- **Responsive Design:** Designed for use on desktop and mobile screens.
+- **Cloud Deployment:** Deploy the application using Vercel.
+
+> Swasthsethu is a healthcare workflow application. It is not a substitute for professional medical diagnosis, emergency services, or clinical judgment.
+
+---
+
+## 🛠️ Technology Stack
+
+| Technology         | Purpose                                 |
+| ------------------ | --------------------------------------- |
+| Next.js            | Web framework and application routing   |
+| React              | User interface                          |
+| TypeScript         | Type-safe application development       |
+| PostgreSQL         | Database                                |
+| Neon               | Managed PostgreSQL hosting              |
+| Tailwind CSS / CSS | Interface styling                       |
+| Node.js and npm    | Development environment                 |
+| Vercel             | Hosting and deployment                  |
+| Git and GitHub     | Version control and source code hosting |
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+Open PowerShell or a terminal and run:
+
+```bash
+git clone https://github.com/arjunmapari/Swasthsethu.git
+cd Swasthsethu-main
+```
+
+If you already have the project downloaded, open the `Swasthsethu-main` project directory instead.
+
+### 2. Install dependencies
 
 ```bash
 npm install
-copy .env.example .env.local      # Windows (macOS/Linux: cp)
 ```
 
-Edit `.env.local`:
+### 3. Configure the environment
 
+Create a local environment file by copying the example:
+
+**Windows PowerShell:**
+
+```powershell
+Copy-Item .env.example .env.local
 ```
-DATABASE_URL=postgres://user:password@host/dbname?sslmode=require
-SESSION_SECRET=<a long random string>
+
+Open `.env.local`:
+
+```powershell
+notepad .env.local
 ```
 
-Make a secret with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`.
+Add your actual Neon database connection string and a securely generated session secret:
 
-The tables are created automatically on first use. Now create the first admin and start the app:
+```dotenv
+DATABASE_URL="your-neon-postgresql-connection-string"
+SESSION_SECRET="your-generated-random-secret"
+```
+
+Replace the example values with your own values. Preserve any other required variables already documented by the project.
+
+To generate a random session secret using Node.js, run:
 
 ```bash
-npm run create-admin -- you@clinic.org "a-strong-password" "Your Name"
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+Copy the generated value into `SESSION_SECRET`.
+
+**Important:** Keep \`.env.local private. Never commit it to GitHub or share its contents publicly.
+
+### 4. Configure the Neon database
+
+1. Sign in to [Neon Console](https://console.neon.tech/).
+2. Create a PostgreSQL project or open your existing project.
+3. Select **Connect**.
+4. Copy the connection string for the intended database.
+5. Add it to `DATABASE_URL` in `.env.local`.
+
+Make sure the database credentials are correct and the database is accessible from your development environment.
+
+The application is designed to initialize the required database tables automatically when its database initialization logic runs. Confirm that initialization succeeds before testing the application.
+
+### 5. Create the administrator account
+
+Run the following command, replacing the example details with your own:
+
+```bash
+npm run create-admin -- admin@example.com "ReplaceWithAStrongPassword" "Administrator"
+```
+
+Use a unique, strong password and an email address you control.
+
+Run this command against the database configured in your environment. The administrator account is created in that database, not automatically in every database you use.
+
+Do not publish real administrator credentials in this README or in source control.
+
+### 6. Start the development server
+
+```bash
 npm run dev
 ```
 
-Open http://localhost:3000. Patients register at `/register`; staff sign in at `/login`.
+Wait for Next.js to report that the server is ready.
 
-## Deploy to Vercel
+Open:
 
-1. Put the project on GitHub (the `.env*` files are git-ignored, so no secrets go up).
-2. On vercel.com choose **Add New, Project** and import the repository.
-3. Open the project's **Storage** tab and add a **Neon (Postgres)** database from the Marketplace. This sets `POSTGRES_URL` for you. (Or add your own `DATABASE_URL` under Settings, Environment Variables.)
-4. Under **Settings, Environment Variables** add `SESSION_SECRET` (the long random string).
-5. Click **Deploy**.
-6. Create the first admin once from your computer. Copy the database URL from Vercel (Settings, Environment Variables) into `.env.local` as `DATABASE_URL`, then run `npm run create-admin -- you@clinic.org "a-strong-password" "Your Name"`.
-7. Open your Vercel URL, go to `/login` and sign in as the admin. Add doctors from `/admin`.
+**[http://localhost:3000](http://localhost:3000)**
 
-Vercel serves everything over HTTPS, which the secure login cookie needs. Uploaded photos are stored in the database (Vercel's disk is read-only) and are shrunk in the browser to stay under Vercel's 4.5 MB request limit.
+Keep the terminal running while using the local website.
 
-## Checks
+---
 
-```bash
-npm run lint
-npm run typecheck
-npm run build
-npm run audit    # question script: routing, reachability, EN/HI/MR parity (Node 22.18+)
+## 🧪 Testing the Application
+
+Use separate test accounts for the administrator, doctor, and patient.
+
+### Patient workflow
+
+1. Open the website.
+2. Navigate to registration.
+3. Register using a test email address.
+4. Note the generated patient ID, typically in a format such as `PT-XXXX-XXXX`.
+5. Open the demo and complete the health interview.
+6. Submit the interview and note the generated case ID, typically `SS-XXXX-XXXX`.
+7. Sign out and sign in again as the same patient.
+8. Verify that the previous case is still available.
+
+### Administrator workflow
+
+1. Sign in using the administrator account created earlier.
+2. Open the admin dashboard.
+3. Create a doctor account with a unique email and a strong password.
+4. Verify that the doctor account is available for sign-in.
+
+### Doctor workflow
+
+1. Sign in using the doctor account.
+2. Open the doctor dashboard.
+3. Search for the test patient using the patient ID or case ID.
+4. Open the matching case and verify the displayed information.
+
+Use synthetic test data during development. Do not use real patient information for public demonstrations.
+
+---
+
+## 🌐 Deployment to Vercel
+
+Swasthsethu can be deployed to [Vercel](https://vercel.com/) using the GitHub repository.
+
+### 1. Add production environment variables
+
+In the Vercel project settings, open **Environment Variables** and configure the variables required by the application:
+
+- `DATABASE_URL` — the production Neon PostgreSQL connection string.
+- `SESSION_SECRET` — a strong, securely generated session secret.
+- Any other required variables documented in the project configuration.
+
+Use the correct values for the Production environment. Do not assume your local `.env.local` file is automatically available to Vercel.
+
+Use a dedicated production database where possible. Ensure the database permissions and connection settings are appropriate for deployment.
+
+---
+
+## 🗂️ Project Structure
+
+```text
+Swasthsethu/
+├── public/
+│   └── samples/
+├── scripts/
+│   ├── create-admin.ts
+│   ├── audit-script.mjs
+│   └── smoke.mjs
+├── src/
+│   ├── app/
+│   │   ├── admin/
+│   │   ├── api/
+│   │   ├── demo/
+│   │   ├── doctor/
+│   │   ├── login/
+│   │   ├── patient/
+│   │   ├── register/
+│   │   ├── globals.css
+│   │   └── page.tsx
+│   ├── components/
+│   ├── context/
+│   ├── data/
+│   ├── lib/
+│   ├── server/
+│   └── proxy.ts
+├── .env.example
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── next.config.ts
+├── tsconfig.json
+└── README.md
 ```
 
-`npm run smoke` tests accounts, permissions and the case API end to end. It needs the app running against a **throwaway** database with an admin you created:
+---
 
-```bash
-RATE_LIMIT_OFF=1 npm run dev                       # one terminal (this switch is ignored in production)
-ADMIN_EMAIL=you@clinic.org ADMIN_PASSWORD=... npm run smoke   # another
-```
+## 🧰 Useful Commands
 
-## Security notes
+| Command                                                                                           | Description                                    |
+| ------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| `npm install`                                                                                     | Install project dependencies                   |
+| `npm run dev`                                                                                     | Start the local development server             |
+| `npm run build`                                                                                   | Build the production application               |
+| Use the email `you@example.com` and the password `YourStrongPass123`. You land on the admin page. | Create an administrator account                |
+| `npm run`                                                                                         | List the npm scripts configured in the project |
 
-- Passwords are hashed (scrypt). Login is rate-limited and an account locks for 15 minutes after 8 wrong passwords.
-- Roles are checked on the server for every page and API call. A patient can only read their own visits and photos. Disabling an account or resetting its password signs that person out everywhere immediately.
-- There is **no email verification and no "forgot password" email** yet. An admin resets passwords from `/admin`.
-- This is health data. Before real patients: check your database provider's encryption and backup settings, write a privacy policy and retention rules, and review what your local laws require. Add audit logging if you need to know which doctor opened which record.
+Run commands from the project directory. Check `package.json` for the exact scripts supported by your version of the project.
+
+---
+
+##
